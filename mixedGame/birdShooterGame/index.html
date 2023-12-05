@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>Learn JavaScript Variable</title>
+    </head>
+     
+    <style>
+        body{
+            background-image: url("image/background.png");
+            height: 100%;
+            margin: 0, auto;
+            text-align: center;
+            cursor: url("image/crosshair.png") 50 50, auto;
+        }
+
+        #player { 
+            position: absolute; 
+            transition: all 0,1s;
+        }
+
+        p {
+            background-color: white;
+            color: black;
+            width: 100px;
+            height: 30px;
+            border-radius: 15px;
+            font-size: 15px;
+            border-style: none;
+            text-align: center;
+        }
+    </style>
+
+    <body>
+       <img width="120px" height="120px" src="image/bird.webp" id="player">
+       <p id="scoreMain">Score: <span class="scoreGame">0</span></p>
+    </body>
+
+    <script >
+        var bird = document.getElementById('player');
+        var score = 0;
+        var time = 0;
+        const showScore = document.querySelector('.scoreGame');
+
+        //buat function agar bird selalu berpindah tempat secara random
+        function randomMove(){
+            var x = Math.floor(Math.random()*481);
+            var y = Math.floor(Math.random()*1052);
+            bird.style.top = x + 'px';
+            bird.style.left = y + 'px';
+        }
+
+        //buat loop dengan wait 1 detik
+        var transisi = setInterval(function(){
+            randomMove();
+            time++;
+        
+            if(time == 10){
+                if(score >= 5){
+                    document.body.style.backgroundImage = "url(image/win.jpg)";
+                    reset()
+                }
+                else{
+                    document.body.style.backgroundImage = "url(image/lose.png)";
+                    reset()
+                }
+            }  
+        }, 1000);
+
+        
+        function reset(){
+            clearInterval(transisi); //perintah untuk menghentikan perulangan
+            bird.style.display='none';
+            document.getElementById('scoreMain').style.display='none';
+        }
+
+            //buat event agar bird bisa di klik
+        bird.onclick=function(){
+            //saat bird di klik, score akan bertambah 1
+            score++;
+            showScore.innerHTML = `${score}  `; 
+        };
+
+    </script>
+</html>
